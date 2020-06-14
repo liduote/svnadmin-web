@@ -1,6 +1,5 @@
 import Main from '@/components/main'
 import parentView from '@/components/parent-view'
-
 /**
  * iview-admin中meta除了原生参数外可配置的参数:
  * meta: {
@@ -58,6 +57,37 @@ export default [
       href: 'https://lison16.github.io/iview-admin-doc/#/',
       icon: 'ios-book'
     }
+  },
+  {
+    path: '/project',
+    name: 'project',
+    component: Main,
+    meta: {
+      title: '仓库',
+      icon: 'logo-buffer',
+      hideInMenu: true
+    },
+    children: [
+      {
+        path: 'create',
+        name: 'project_create',
+        meta: {
+          title: '创建仓库',
+          hideInMenu: true
+        },
+        component: () => import('@/view/repo/project-create.vue')
+      },
+      {
+        path: '/project/:project_id',
+        name: 'project_detail',
+        meta: {
+          title: route => `{{project_detail}}-${route.query.project_name}`,
+          hideInMenu: true,
+          notCache: true
+        },
+        component: () => import('@/view/repo/project-detail.vue')
+      }
+    ]
   },
   {
     path: '/join',

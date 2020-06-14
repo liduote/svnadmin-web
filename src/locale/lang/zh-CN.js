@@ -1,6 +1,9 @@
 export default {
   home: '首页',
   login: '登录',
+  project: '仓库',
+  project_create: '创建仓库',
+  project_detail: '仓库详情',
   components: '组件',
   count_to_page: '数字渐变',
   tables_page: '多功能表格',
