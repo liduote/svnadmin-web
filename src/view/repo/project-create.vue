@@ -15,7 +15,7 @@
         </FormItem>
         <FormItem label="仓库路径" prop="path">
             <Input v-model="project.path" placeholder="my-awesome-project" style="width: 450px;" >
-              <span slot="prepend">http://localhost:8080/svn/</span>
+              <span slot="prepend">{{ getRealPath() }}</span>
             </Input>
         </FormItem>
         <FormItem label="仓库描述(选填)" prop="description">
@@ -46,6 +46,24 @@ export default {
   components: {
   },
   data () {
+    const validateName = (rule, value, callback) => {
+      const reg = /^[\u4e00-\u9fa5a-zA-Z][\u4e00-\u9fa5a-zA-Z0-9-_]+$/
+      console.log('value: ' + value)
+      console.log('test value: ' + reg.test(value))
+      if (!reg.test(value)) {
+        callback(new Error('允许使用汉字，字母，数字以及下划线和短横线'))
+      } else {
+        callback()
+      }
+    }
+    const validatePath = (rule, value, callback) => {
+      const reg = /^[a-zA-Z][a-zA-Z0-9-_]+$/
+      if (!reg.test(value)) {
+        callback(new Error('允许使用字母，数字以及下划线和短横线'))
+      } else {
+        callback()
+      }
+    }
     return {
       project: {
         name: '',
@@ -56,10 +74,10 @@ export default {
       },
       projectRules: {
         name: [
-          { required: true, message: '名称不能为空', trigger: 'blur' }
+          { validator: validateName, trigger: 'blur' }
         ],
         path: [
-          { required: true, message: 'path不能为空', trigger: 'blur' }
+          { validator: validatePath, trigger: 'blur' }
         ]
       },
       alert: {
@@ -87,6 +105,13 @@ export default {
     },
     nameChange () {
       this.project.path = this.project.name
+    },
+    getRealPath () {
+      let curWwwPath = window.document.location.href
+      let pathName = window.document.location.pathname
+      let pos = curWwwPath.indexOf(pathName)
+      let localhostPaht = curWwwPath.substring(0, pos)
+      return localhostPaht + '/svn/'
     },
     ...mapMutations([
       'closeTag'

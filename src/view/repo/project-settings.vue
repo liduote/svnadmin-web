@@ -120,11 +120,13 @@ export default {
       'closeTag'
     ]),
     handleCloseTag () {
+      const query = this.$route.query
       this.closeTag({
         name: 'project_detail',
         params: {
           project_id: this.currentProject.id
-        }
+        },
+        query: query
       })
     }
   },

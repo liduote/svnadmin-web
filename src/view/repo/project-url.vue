@@ -1,7 +1,7 @@
 <template>
   <Card shadow>
     <h3 style="margin-bottom: 20px;">项目地址（版本库）</h3>
-    <Input readonly style="width: 90%;" v-model="project.path">
+    <Input readonly style="width: 90%;" v-model="project.http_url">
       <Select v-model="urlType" slot="prepend" style="width: 80px">
         <Option value="http">HTTPS</Option>
         <Option value="tsvn">TSVN</Option>
