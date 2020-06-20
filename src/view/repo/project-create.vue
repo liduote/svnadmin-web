@@ -88,18 +88,22 @@ export default {
   },
   methods: {
     creatProject () {
-      createProject(this.project).then(res => {
-        if (res.id) this.handleCloseTag()
-      }).catch(err => {
-        const response = err.response
-        if (!response) {
-          console.log(err)
-        }
-        this.alert.show = true
-        if (!response.data.message) {
-          this.alert.message = '服务器错误'
-        } else {
-          this.alert.message = response.data.message
+      this.$refs['projectForm'].validate((valid) => {
+        if (valid) {
+          createProject(this.project).then(res => {
+            if (res.id) this.handleCloseTag()
+          }).catch(err => {
+            const response = err.response
+            if (!response) {
+              console.log(err)
+            }
+            this.alert.show = true
+            if (!response.data.message) {
+              this.alert.message = '服务器错误'
+            } else {
+              this.alert.message = response.data.message
+            }
+          })
         }
       })
     },

@@ -68,7 +68,7 @@ export default {
   methods: {
     copyUrl () {
       const message = this.$Message
-      this.$copyText(this.project.path).then(function (e) {
+      this.$copyText(this.project.http_url).then(function (e) {
         message.info('已复制到剪切板')
       }, function (e) {
         message.error('复制失败，请手动复制')

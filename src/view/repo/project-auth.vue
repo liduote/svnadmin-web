@@ -6,7 +6,7 @@
       <Editor ref="editor" v-model="authContent" @init="editorInit" lang="html" theme="chrome" width="100%" height="300"></Editor>
     </div>
     <div style="margin-top: 10px;">
-    <Button @click="saveAuth" :disabled="!readySave" type="primary" style="margin-right: 20px;">应用设置</Button>
+    <Button @click="saveAuth" :disabled="!readySave" type="primary" style="margin-right: 20px;">应用设置{{showTime >= 0 ? '(' + showTime + ')' : ''}}</Button>
     <span v-if="alert.show" :class="alert.type">{{ alert.message }}</span>
     </div>
   </Card>
@@ -34,7 +34,8 @@ export default {
         show: false,
         message: '',
         type: ''
-      }
+      },
+      showTime: -1
     }
   },
   methods: {
@@ -46,6 +47,7 @@ export default {
         this.alert.show = true
         this.alert.message = '文件配置已生效'
         this.alert.type = 'save-success'
+        this.timeClear()
       }).catch(err => {
         console.log(err)
         const response = err.response
@@ -56,6 +58,18 @@ export default {
         this.alert.message = response.data.message
         this.alert.type = 'save-error'
       })
+    },
+    timeClear () {
+      this.showTime = 3
+      const interval = setInterval(() => {
+        if (this.showTime <= 0) {
+          this.showTime = -1
+          this.alert.show = false
+          clearInterval(interval)
+        } else {
+          this.showTime--
+        }
+      }, 1000)
     },
     editorInit () {
       require('brace/mode/html')
