@@ -1,7 +1,7 @@
 <template>
   <div class="project-detail-container">
     <h2 class="project-detail-title">
-      私有仓库 <Icon type="md-lock" />&nbsp;{{ project.name }}
+      {{ project.visibility==='public'?'公共仓库':'私有仓库'}} <Icon :type="project.visibility==='public'?'md-globe':'md-lock'" />&nbsp;{{ project.name }}
     </h2>
     <Tabs class="project-detail-content" :value="selectedTab">
       <TabPane label="检出" name="checkout">

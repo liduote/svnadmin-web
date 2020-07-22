@@ -75,7 +75,7 @@ export default [
           title: '创建仓库',
           hideInMenu: true
         },
-        component: () => import('@/view/repo/project-create.vue')
+        component: () => import('@/view/project/project-create.vue')
       },
       {
         path: '/project/:project_id',
@@ -85,30 +85,10 @@ export default [
           hideInMenu: true,
           notCache: true
         },
-        component: () => import('@/view/repo/project-detail.vue')
+        component: () => import('@/view/project/project-detail.vue')
       }
     ]
   },
-  // ,
-  // {
-  //   path: '/join',
-  //   name: 'join',
-  //   component: Main,
-  //   meta: {
-  //     hideInBread: true
-  //   },
-  //   children: [
-  //     {
-  //       path: 'join_page',
-  //       name: 'join_page',
-  //       meta: {
-  //         icon: '_qq',
-  //         title: 'QQ群'
-  //       },
-  //       component: () => import('@/view/join-page.vue')
-  //     }
-  //   ]
-  // },
   {
     path: '/message',
     name: 'message',
@@ -126,6 +106,48 @@ export default [
           title: '消息中心'
         },
         component: () => import('@/view/single-page/message/index.vue')
+      }
+    ]
+  },
+  {
+    path: '/system_settings',
+    name: 'system_settings',
+    meta: {
+      icon: 'md-settings',
+      title: '系统设置',
+      access: ['super_admin']
+    },
+    component: Main,
+    children: [
+      {
+        path: 'user_manage',
+        name: 'user_manage',
+        meta: {
+          icon: 'ios-people',
+          title: '用户管理',
+          access: ['super_admin']
+        },
+        component: () => import('@/view/system-settings/user-manage.vue')
+      },
+      {
+        path: 'user_create',
+        name: 'user_create',
+        meta: {
+          icon: 'md-person-add',
+          title: '用户创建',
+          access: ['super_admin'],
+          hideInMenu: true
+        },
+        component: () => import('@/view/system-settings/user-create.vue')
+      },
+      {
+        path: 'project_manage',
+        name: 'project_manage',
+        meta: {
+          icon: 'logo-buffer',
+          title: '项目管理'
+        },
+        component: () => import('@/view/system-settings/project-manage.vue')
       }
     ]
   },

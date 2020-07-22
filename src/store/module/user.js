@@ -1,6 +1,6 @@
 import {
   login,
-  logout,
+  // logout,
   getUserInfo,
   getMessage,
   getContentByMsgId,
@@ -17,7 +17,8 @@ export default {
     userId: '',
     avatarImgPath: '',
     token: getToken(),
-    access: '',
+    access: [],
+    admin: 0,
     hasGetInfo: false,
     unreadCount: 0,
     messageUnreadList: [],
@@ -37,6 +38,9 @@ export default {
     },
     setAccess (state, access) {
       state.access = access
+    },
+    setAdmin (state, admin) {
+      state.admin = admin
     },
     setToken (state, token) {
       state.token = token
@@ -81,8 +85,14 @@ export default {
           userName,
           password
         }).then(res => {
-          const data = res.data
-          commit('setToken', data.token)
+          const access_token = res.access_token
+          const user_info = res.user_info
+          commit('setToken', access_token)
+          commit('setAvatar', user_info.avatar)
+          commit('setUserName', user_info.username)
+          commit('setUserId', user_info.id)
+          commit('setAdmin', user_info.admin)
+          commit('setHasGetInfo', true)
           resolve()
         }).catch(err => {
           reject(err)
@@ -92,17 +102,17 @@ export default {
     // 退出登录
     handleLogOut ({ state, commit }) {
       return new Promise((resolve, reject) => {
-        logout(state.token).then(() => {
-          commit('setToken', '')
-          commit('setAccess', [])
-          resolve()
-        }).catch(err => {
-          reject(err)
-        })
+        // logout(state.token).then(() => {
+        //   commit('setToken', '')
+        //   commit('setAccess', [])
+        //   resolve()
+        // }).catch(err => {
+        //   reject(err)
+        // })
         // 如果你的退出登录无需请求接口，则可以直接使用下面三行代码而无需使用logout调用接口
-        // commit('setToken', '')
-        // commit('setAccess', [])
-        // resolve()
+        commit('setToken', '')
+        commit('setAccess', [])
+        resolve()
       })
     },
     // 获取用户相关信息
@@ -112,9 +122,9 @@ export default {
           getUserInfo(state.token).then(res => {
             const data = res.data
             commit('setAvatar', data.avatar)
-            commit('setUserName', data.name)
-            commit('setUserId', data.user_id)
-            commit('setAccess', data.access)
+            commit('setUserName', data.username)
+            commit('setUserId', data.id)
+            commit('setAdmin', data.admin)
             commit('setHasGetInfo', true)
             resolve(data)
           }).catch(err => {

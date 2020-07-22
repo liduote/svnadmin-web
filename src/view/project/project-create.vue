@@ -1,8 +1,9 @@
 <template>
   <Card shadow style="width: 100%;overflow:hidden">
-    <h2 style="margin-bottom: 20px;">
+    <h2 style="margin: 16px 0;">
       创建一个新仓库
     </h2>
+    <hr style="border: 1px solid #e5e5e5;margin: 0 0 30px 0;" />
     <Alert v-if="alert.show" type="error" show-icon>
         创建失败
         <span slot="desc">
@@ -27,9 +28,10 @@
                 <Radio label="private"><Icon type="md-lock" />私有</Radio>
             </RadioGroup>
         </FormItem>
-        <FormItem label="" prop="init">
-          <Checkbox v-model="project.init">自动建立 trunk、branches、tags、document 目录结构</Checkbox>
+        <FormItem label="" prop="initDirs">
+          <Checkbox v-model="project.initDirs">自动建立 trunk、branches、tags、document 目录结构</Checkbox>
         </FormItem>
+        <hr style="border: 1px solid #e5e5e5;margin: 0 0 15px 0;" />
         <FormItem>
             <Button @click="creatProject" type="primary">创建项目</Button>
             <Button @click="handleCloseTag" type="text" style="margin-left: 8px; color: #43609C;">返回</Button>
@@ -70,7 +72,7 @@ export default {
         path: '',
         description: '',
         visibility: 'private',
-        init: true
+        initDirs: false
       },
       projectRules: {
         name: [

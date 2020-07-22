@@ -1,15 +1,18 @@
+import qs from 'qs'
 import axios from '@/libs/api.request'
+import { LOGIN, ADMIN_USERS, CHPASSWD } from './path'
+import { getToken } from '@/libs/util'
 
 export const login = ({ userName, password }) => {
   const data = {
-    userName,
-    password
+    username: userName,
+    password: password
   }
   return axios.request({
-    url: 'login',
-    data,
+    url: LOGIN,
+    data: qs.stringify(data),
     method: 'post'
-  })
+  }).then(res => res.data)
 }
 
 export const getUserInfo = (token) => {
@@ -20,6 +23,61 @@ export const getUserInfo = (token) => {
     },
     method: 'get'
   })
+}
+
+export const getUserList = (params) => {
+  return axios.request({
+    url: ADMIN_USERS,
+    params: params,
+    headers: {
+      'Authorization': 'Bearer ' + getToken()
+    }
+  }).then(res => res.data)
+}
+
+export const createUser = (user) => {
+  return axios.request({
+    url: ADMIN_USERS,
+    data: qs.stringify(user),
+    headers: {
+      'Authorization': 'Bearer ' + getToken()
+    },
+    method: 'post'
+  }).then(res => res.data)
+}
+
+export const updateUsers = (users) => {
+  return axios.request({
+    url: ADMIN_USERS,
+    data: users,
+    headers: {
+      'Authorization': 'Bearer ' + getToken()
+    },
+    method: 'put'
+  }).then(res => res.data)
+}
+
+export const deleteUsers = (users) => {
+  return axios.request({
+    url: ADMIN_USERS,
+    data: users,
+    headers: {
+      'Authorization': 'Bearer ' + getToken()
+    },
+    method: 'delete'
+  }).then(res => res.data)
+}
+
+export const chpasswd = (params) => {
+  console.log(3333)
+  return axios.request({
+    url: CHPASSWD,
+    data: qs.stringify(params),
+    headers: {
+      'Authorization': 'Bearer ' + getToken()
+    },
+    method: 'post'
+  }).then(res => res.data)
 }
 
 export const logout = (token) => {
