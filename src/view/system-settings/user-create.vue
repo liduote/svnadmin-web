@@ -64,6 +64,30 @@ export default {
   components: {
   },
   data () {
+    const validateUsername = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入用户名'))
+      } else {
+        const reg = /^[a-z][a-z0-9]+$/
+        if (!reg.test(value)) {
+          callback(new Error('允许使用小写字母，数字并且必须以字母开头,长度3到30位'))
+        } else {
+          callback()
+        }
+      }
+    }
+    const validateEmail = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入邮箱地址'))
+      } else {
+        const reg = /^([a-zA-Z]|[0-9])(\w|-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/
+        if (!reg.test(value)) {
+          callback(new Error('无效的邮箱地址'))
+        } else {
+          callback()
+        }
+      }
+    }
     const validatePass = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入密码'))
@@ -100,10 +124,10 @@ export default {
       },
       accountRules: {
         username: [
-          { required: true, message: '用户名不能为空', trigger: 'blur' }
+          { validator: validateUsername, required: true, trigger: 'blur' }
         ],
         email: [
-          { required: true, message: '邮箱不能为空', trigger: 'blur' }
+          { validator: validateEmail, required: true, trigger: 'blur' }
         ],
         fullname: [
           { required: true, message: '姓名不能为空', trigger: 'blur' }

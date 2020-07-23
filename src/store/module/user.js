@@ -93,6 +93,9 @@ export default {
           commit('setUserId', user_info.id)
           commit('setAdmin', user_info.admin)
           commit('setHasGetInfo', true)
+          if (user_info.admin === 1) {
+            commit('setAccess', ['super_admin'])
+          }
           resolve()
         }).catch(err => {
           reject(err)
@@ -126,6 +129,9 @@ export default {
             commit('setUserId', data.id)
             commit('setAdmin', data.admin)
             commit('setHasGetInfo', true)
+            if (data.admin === 1) {
+              commit('setAccess', ['super_admin'])
+            }
             resolve(data)
           }).catch(err => {
             reject(err)

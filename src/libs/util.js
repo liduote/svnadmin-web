@@ -20,8 +20,7 @@ export const hasChild = (item) => {
   return item.children && item.children.length !== 0
 }
 
-const showThisMenuEle = (item, access, isAdmin) => {
-  if (isAdmin) return true
+const showThisMenuEle = (item, access) => {
   if (item.meta && item.meta.access && item.meta.access.length) {
     if (hasOneOf(item.meta.access, access)) return true
     else return false
@@ -31,7 +30,7 @@ const showThisMenuEle = (item, access, isAdmin) => {
  * @param {Array} list 通过路由列表得到菜单列表
  * @returns {Array}
  */
-export const getMenuByRouter = (list, access, isAdmin) => {
+export const getMenuByRouter = (list, access) => {
   let res = []
   forEach(list, item => {
     if (!item.meta || (item.meta && !item.meta.hideInMenu)) {
@@ -40,11 +39,11 @@ export const getMenuByRouter = (list, access, isAdmin) => {
         name: item.name,
         meta: item.meta
       }
-      if ((hasChild(item) || (item.meta && item.meta.showAlways)) && showThisMenuEle(item, access, isAdmin)) {
-        obj.children = getMenuByRouter(item.children, access, isAdmin)
+      if ((hasChild(item) || (item.meta && item.meta.showAlways)) && showThisMenuEle(item, access)) {
+        obj.children = getMenuByRouter(item.children, access)
       }
       if (item.meta && item.meta.href) obj.href = item.meta.href
-      if (showThisMenuEle(item, access, isAdmin)) res.push(obj)
+      if (showThisMenuEle(item, access)) res.push(obj)
     }
   })
   return res
