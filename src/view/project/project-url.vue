@@ -16,28 +16,28 @@
     <hr color="#987cb9 ">
     <div class="repo-guide-line">
       <p>
-      .<a>如何添加新项目</a>
+      .<a href="javascript:window.open('https://www.alisvn.com/faq/55.html?showRepo')">如何添加项目到平台</a>
       </p>
       <p>
-      .<a>TortoiseSVN 检出版本库</a>
+      .<a href="javascript:window.open('https://www.alisvn.com/faq/7.html?showRepo')">TortoiseSVN 检出版本库</a>
       </p>
       <p>
-      .<a>TortoiseSVN 提交项目文件</a>
+      .<a href="javascript:window.open('https://www.alisvn.com/faq/6.html?showRepo')">TortoiseSVN 提交项目文件</a>
       </p>
       <p>
       .Linux / Mac / DOS 命令行 检出版本库
       </p>
       <div class="command-line">
         <span>$ svn co </span>
-        <span>https://bj-svn.asiainfo.com/svn/testsvn/ --username=liduote</span>
+        <span>{{project.http_url}} --username={{$store.state.user.userName}}</span>
       </div>
       <span style="margin-left: 2px;font: 12px '\5FAE\8F6F\96C5\9ED1', 'microsoft yahei',tahoma;">下一步，需要输入账户名的密码，回车确认。</span>
       <div class="command-line">
-        <span>Authentication realm: &lt;https://vip.alisvn.com&gt; SVN Repositorys</span><br>
-        <span>Password for 'liduote': ******</span>
+        <span>Authentication realm: &lt;{{getPrefix(project.http_url)}}&gt; SVN Repositorys</span><br>
+        <span>Password for '{{$store.state.user.userName}}': ******</span>
       </div>
       <div class="command-line">
-        <span>$ cd liduote.testlidt34 #进入刚检出的目录</span><br>
+        <span>$ cd {{getSuffix(project.http_url)}} #进入刚检出的目录</span><br>
         <span>$ touch testRepo.txt #生成一个新文件</span><br>
         <span>$ svn add testRepo.txt #执行添加svn文件命令</span><br>
         <span>$ svn ci testRepo.txt -m 'ci test' #提交刚生成的文件并写上注释</span><br>
@@ -73,6 +73,13 @@ export default {
       }, function (e) {
         message.error('复制失败，请手动复制')
       })
+    },
+    getPrefix (url) {
+      console.log(url)
+      return url.substring(0, url.indexOf('/svn/'))
+    },
+    getSuffix (url) {
+      return url.substring(url.indexOf('/svn/') + 5)
     }
   },
   mounted () {

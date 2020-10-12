@@ -17,7 +17,7 @@ export default {
    * @description api请求基础路径
    */
   baseUrl: {
-    dev: 'http://10.1.130.13:9099/backend',
+    dev: 'http://localhost/backend',
     pro: '/backend'
   },
   /**

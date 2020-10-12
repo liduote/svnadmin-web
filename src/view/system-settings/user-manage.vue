@@ -5,11 +5,13 @@
     </h2>
     <div class="head-line">
       <div class="search-con search-con-top">
-        <Input @on-search="handleSearch" search enter-button placeholder="输入关键字搜索" />
+        <div>
+          <Input @on-search="handleSearch" search enter-button placeholder="输入关键字搜索" />
+        </div>
         <Dropdown @on-click="handleDropdown" style="margin-left: 30px; width: 100px; line-height: 32px;">
           <a href="javascript:void(0)">
-              操作
-              <Icon type="ios-arrow-down"></Icon>
+            操作
+            <Icon type="ios-arrow-down"></Icon>
           </a>
           <DropdownMenu slot="list">
             <DropdownItem name="setAdmin"><Icon type="md-build" /> 设为管理员</DropdownItem>
@@ -17,6 +19,7 @@
           </DropdownMenu>
         </Dropdown>
       </div>
+
       <div class="create-btn">
         <Button @click="handleCreate" type="primary"><Icon style="font-size: 16px;" type="md-add"/>&nbsp;&nbsp;创建</Button>
       </div>
@@ -137,5 +140,6 @@ export default {
 }
 .search-con{
   display: flex;
+  justify-content: space-between;
 }
 </style>

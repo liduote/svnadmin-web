@@ -27,7 +27,7 @@
         </div>
         <div class="item-status">
           <a @click="toProjectDetail(project, 'auth')">[编辑权限]</a>
-          <a @click="toProjectDetail(project, 'settings')">[删除]</a>
+          <a v-if="isOwner(project)" @click="toProjectDetail(project, 'settings')">[删除]</a>
           <a>创建于:&nbsp;{{ project.created_on }}</a>
         </div>
       </div>
@@ -48,6 +48,9 @@ export default {
     }
   },
   methods: {
+    isOwner (project) {
+      return this.$store.state.user.userId === project.created_by
+    },
     getProjectList () {
       getProjectList().then(res => {
         this.projectList = res

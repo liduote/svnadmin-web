@@ -19,6 +19,7 @@ export default {
     token: getToken(),
     access: [],
     admin: 0,
+    fullname: '',
     hasGetInfo: false,
     unreadCount: 0,
     messageUnreadList: [],
@@ -41,6 +42,9 @@ export default {
     },
     setAdmin (state, admin) {
       state.admin = admin
+    },
+    setFullName (state, fullname) {
+      state.fullname = fullname
     },
     setToken (state, token) {
       state.token = token
@@ -92,6 +96,7 @@ export default {
           commit('setUserName', user_info.username)
           commit('setUserId', user_info.id)
           commit('setAdmin', user_info.admin)
+          commit('setFullName', user_info.fullname)
           commit('setHasGetInfo', true)
           if (user_info.admin === 1) {
             commit('setAccess', ['super_admin'])
@@ -128,6 +133,7 @@ export default {
             commit('setUserName', data.username)
             commit('setUserId', data.id)
             commit('setAdmin', data.admin)
+            commit('setFullName', data.fullname)
             commit('setHasGetInfo', true)
             if (data.admin === 1) {
               commit('setAccess', ['super_admin'])

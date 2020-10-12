@@ -1,12 +1,16 @@
 import qs from 'qs'
 import axios from '@/libs/api.request'
 import { PROJECT, PROJECT_DETAIL } from './path'
+import { getToken } from '@/libs/util'
 
 export const createProject = (data) => {
   return axios.request({
     url: PROJECT,
     data: qs.stringify(data),
-    method: 'POST'
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer ' + getToken()
+    }
   }).then(res => res.data)
 }
 
@@ -16,6 +20,9 @@ export const getProjectList = (searchValue) => {
     method: 'GET',
     params: {
       searchValue: searchValue
+    },
+    headers: {
+      'Authorization': 'Bearer ' + getToken()
     }
   }).then(res => res.data)
 }
@@ -46,6 +53,9 @@ export const saveProjectAuth = (project) => {
   return axios.request({
     url: PROJECT_DETAIL.replace('{projectId}', project.id) + '/auth',
     data: qs.stringify(project),
-    method: 'POST'
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer ' + getToken()
+    }
   }).then(res => res.data)
 }

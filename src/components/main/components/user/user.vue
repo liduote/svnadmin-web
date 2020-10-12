@@ -2,7 +2,8 @@
   <div class="user-avatar-dropdown">
     <Dropdown @on-click="handleClick">
       <Badge :dot="!!messageUnreadCount">
-        <Avatar :src="userAvatar"/>
+        <!-- <Avatar :src="userAvatar"/> -->
+        {{ userFullName }}
       </Badge>
       <Icon :size="18" type="md-arrow-dropdown"></Icon>
       <DropdownMenu slot="list">
@@ -52,6 +53,10 @@ export default {
     messageUnreadCount: {
       type: Number,
       default: 0
+    },
+    userFullName: {
+      type: String,
+      default: ''
     }
   },
   data () {
@@ -117,10 +122,8 @@ export default {
       // })
     },
     chpasswordConfirm () {
-      console.log(1111)
       this.$refs['passwordForm'].validate((valid) => {
         if (!valid) return ''
-        console.log(2222)
         const params = {
           userId: this.$store.state.user.userId,
           oldPassword: this.password.oldPassword,

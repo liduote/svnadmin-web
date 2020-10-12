@@ -69,7 +69,6 @@ export const deleteUsers = (users) => {
 }
 
 export const chpasswd = (params) => {
-  console.log(3333)
   return axios.request({
     url: CHPASSWD,
     data: qs.stringify(params),

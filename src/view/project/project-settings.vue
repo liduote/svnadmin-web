@@ -17,7 +17,7 @@
         </FormItem>
       </Form>
     </div>
-    <div class="setting-operate">
+    <div v-if="isOwner()" class="setting-operate">
       <span style="font-weight: bold; font-size: 14
       px;">删除项目，此操作无法恢复，请慎用！</span> <Button @click="deleteProject.modal=true" style="float: right;" type="error">删除项目</Button>
       <Modal
@@ -71,6 +71,9 @@ export default {
     }
   },
   methods: {
+    isOwner () {
+      return this.project.created_by === this.$store.state.user.userId
+    },
     init () {
       this.newName = this.project.name
       this.newDescription = this.project.description

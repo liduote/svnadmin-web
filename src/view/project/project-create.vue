@@ -93,7 +93,10 @@ export default {
       this.$refs['projectForm'].validate((valid) => {
         if (valid) {
           createProject(this.project).then(res => {
-            if (res.id) this.handleCloseTag()
+            if (res.id) {
+              this.handleCloseTag()
+              window.location.href = this.getPathPrefix() + '/home'
+            }
           }).catch(err => {
             const response = err.response
             if (!response) {
@@ -112,12 +115,15 @@ export default {
     nameChange () {
       this.project.path = this.project.name
     },
-    getRealPath () {
+    getPathPrefix () {
       let curWwwPath = window.document.location.href
       let pathName = window.document.location.pathname
       let pos = curWwwPath.indexOf(pathName)
-      let localhostPaht = curWwwPath.substring(0, pos)
-      return localhostPaht + '/svn/'
+      let localhostPath = curWwwPath.substring(0, pos)
+      return localhostPath
+    },
+    getRealPath () {
+      return this.getPathPrefix() + '/svn/'
     },
     ...mapMutations([
       'closeTag'
